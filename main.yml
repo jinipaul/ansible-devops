@@ -16,7 +16,13 @@
         src: httpd.conf.tmpl
         dest: /etc/httpd/conf/httpd.conf
         
-            
+    - name: "Creating VirtualHost from virtualhost.conf.tmpl"
+      template:
+        src: virtualhost.conf.tmpl
+        dest: "/etc/httpd/conf.d/default.conf"
+        owner: "{{ httpd_owner }}"
+        group: "{{ httpd_group }}"
+    
     - name: "ReStarting/Enabling Service"
       service:
         name: httpd

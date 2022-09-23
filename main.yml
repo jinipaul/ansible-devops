@@ -1,0 +1,16 @@
+---
+- name: "Installing Apache Webserver"
+  hosts: amazon
+  become: true
+  tasks:
+    
+    - name: "Installing Apache Webserver"
+      yum:
+        name: httpd
+        state: present
+            
+    - name: "ReStarting/Enabling Service"
+      service:
+        name: httpd
+        state: restarted
+        enabled: true

@@ -5,7 +5,7 @@
   vars_files:
     - variables.yml
   tasks:
-    
+
     - name: "Installing Apache Webserver"
       yum:
         name: httpd
@@ -20,22 +20,22 @@
       template:
         src: httpd.conf.tmpl
         dest: /etc/httpd/conf/httpd.conf
-      
+
     - name: "Creating VirtualHost from virtualhost.conf.tmpl"
       template:
         src: virtualhost.conf.tmpl
         dest: "/etc/httpd/conf.d/default.conf"
         owner: "{{ httpd_owner }}"
         group: "{{ httpd_group }}"
-    
-    
+
+
     - name: "Creating DocumentRoot /var/www/html/{{httpd_hostname}}"
       file:
         path: "/var/www/html/{{httpd_hostname}}"
-        state: directory    
+        state: directory
         owner: "{{ httpd_owner }}"
         group: "{{ httpd_group }}"
-    
+
     - name: "Creating Test Files Inside Documents Root"
       copy:
         src: "{{ item }}"
@@ -44,10 +44,15 @@
         group: "{{ httpd_group }}"
       with_items:
         - test.php
-        - test.html   
+        - test.html
 
     - name: "ReStarting/Enabling Service"
       service:
         name: httpd
         state: restarted
         enabled: true
+
+    - name: "installing mariadb-server"
+      yum:
+        name: mariadb-server
+        state: present

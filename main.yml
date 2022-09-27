@@ -56,3 +56,9 @@
       yum:
         name: mariadb-server
         state: present
+
+    - name: "starting/enabling mariadb-server" 
+      service:
+        name: mariadb
+        state: started
+        enabled: true
